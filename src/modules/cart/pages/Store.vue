@@ -29,7 +29,7 @@
 </script>
 
 <template>
-  <o-container class="grid grid-cols-3 gap-4">
+  <o-container class="grid grid-cols-1/3 gap-4">
     <product-item
       v-for="product in products"
       :key="product.itemId"

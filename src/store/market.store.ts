@@ -37,7 +37,7 @@ export interface Product {
   path: string
 }
 
-export const useMarketStore = defineStore('counter', {
+export const useMarketStore = defineStore('market', {
   state: () => {
     return {
       products: [] as Array<Product>,

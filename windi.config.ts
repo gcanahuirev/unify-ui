@@ -18,6 +18,11 @@ export default defineConfig({
       primary: '#EA7C69',
       secondary: '#9288E0',
     },
+    extend: {
+      gridTemplateColumns: {
+        '1/3': 'repeat(auto-fit, minmax(24rem, 1fr))',
+      },
+    },
   },
 
   plugins: [forms, icons],
