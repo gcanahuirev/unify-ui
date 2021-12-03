@@ -96,10 +96,10 @@ function generateTable(table, data) {
 export default {
   mounted() {
     let ranking = [
-      {name: "James Arthur", song: "Empty Space", date: "26/02/2021", downloads: 305, revenue: 6.85},
-      {name: "JP Cooper", song: "Sing It With Me", date: "24/08/2021", downloads: 27, revenue: 0.37},
-      {name: "Phil Collins", song: "Gone, Gone, Gone", date: "30/05/2019", downloads: 63, revenue: 3.39},
-      {name: "Lewis Capaldi", song: "Someone You Loved", date: "17/08/2020", downloads: 21, revenue: 15.00},
+      {name: "James Arthur", song: "Empty Space", date: "26/02/2021", downloads: 305, revenue: Number(6.6).toFixed(2)},
+      {name: "JP Cooper", song: "Sing It With Me", date: "24/08/2021", downloads: 27, revenue: Number(0.37).toFixed(2)},
+      {name: "Phil Collins", song: "Gone, Gone, Gone", date: "30/05/2019", downloads: 63, revenue: Number(3.39).toFixed(2)},
+      {name: "Lewis Capaldi", song: "Someone You Loved", date: "17/08/2020", downloads: 21, revenue: Number(15.00).toFixed(2)},
     ];
     let table = document.getElementById("ranking").getElementsByTagName('tbody')[0];
     generateTable(table, ranking);
