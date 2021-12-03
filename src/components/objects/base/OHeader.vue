@@ -37,15 +37,21 @@
 
 <template>
   <header>
-    <nav class="bg-primary shadow">
+    <nav class="bg-primary shadow" style="background:#03254C;">
       <div class="max-w-7xl mx-auto px-8">
         <div class="flex items-center justify-between h-16">
           <div class="flex items-center">
             <a class="flex-shrink-0" href="/">
-              <strong>Unify dapp music</strong>
+              <article>
+                <strong style="font-size:30px">Unify dapp music</strong>
+              </article>
             </a>
+            <div class="horizontalgap" style="width:10px"></div>
+            <img src="src/assets/music_note.png" height=50 width=50>
           </div>
-          <li class="nav-item" style="list-style-type: none;">
+          
+          
+          <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
             <router-link :to="{ name: 'Ranking'}" exact class = "nav-link" active-class="active">
             Ranking
             </router-link>
@@ -138,3 +144,16 @@
     </OModal>
   </header>
 </template>
+<style>
+article {
+  background: linear-gradient(
+    to right, 
+    hsl(98 100% 62%), 
+    hsl(204 100% 59%)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+</style>
