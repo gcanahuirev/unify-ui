@@ -45,6 +45,11 @@
               <strong>Unify dapp music</strong>
             </a>
           </div>
+          <li class="nav-item" style="list-style-type: none;">
+            <router-link :to="{ name: 'Ranking'}" exact class = "nav-link" active-class="active">
+            Ranking
+            </router-link>
+          </li>
           <div class="block">
             <div class="ml-4 flex items-center md:ml-6">
               <div class="ml-3 relative">
