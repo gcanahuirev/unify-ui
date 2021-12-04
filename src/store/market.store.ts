@@ -8,7 +8,7 @@ const NFT_ADDRESS = '0x5bACE38662A1Ded6aDa20DcA6C78D8ae25B4140d'
 const NFT_MARKET_ADDRESS = '0xAa77d2A8b60A6Be34EF06365F7CE28E7853306a2'
 
 const requestAccount = async () => {
-  await window.ethereum.request({ method: 'eth_requestAccounts' })
+  await window.ethereum.request({ method: 'eth_requestAccounts' });
 }
 
 const getContracts = () => {
@@ -46,6 +46,7 @@ export const useMarketStore = defineStore('market', {
 
   actions: {
     async getNFTMarket() {
+      await window.ethereum.send('eth_requestAccounts');
       if (typeof window.ethereum !== 'undefined') {
         const { contractNFT, contractNFTMarket } = getContracts()
         try {
