@@ -61,7 +61,7 @@
             </router-link>
           </li>
           <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
-            <router-link :to="{ name: 'Terms and Conditions'}" exact class = "nav-link" active-class="active">
+            <router-link to="/legal" exact class = "nav-link" active-class="active">
             Terms and conditions
             </router-link>
           </li>

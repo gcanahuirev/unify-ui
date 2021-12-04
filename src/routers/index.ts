@@ -27,8 +27,8 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/terms_and_conditions',
-    name: 'Terms and Conditions',
+    path: '/legal',
+    name: 'Términos y Condiciones',
     component: () => import('~/modules/cart/pages/termsConditions.vue'),
     meta: {
       layout: 'LayoutPage',
