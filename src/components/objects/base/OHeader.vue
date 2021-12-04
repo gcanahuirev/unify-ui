@@ -51,18 +51,18 @@
           </div>
           
           <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
-            <router-link :to="{ name: 'Store'}" exact class = "nav-link" active-class="active">
-            Store
+            <router-link to="/" exact class = "nav-link" active-class="active">
+            Tienda
             </router-link>
           </li>
           <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
-            <router-link :to="{ name: 'Ranking'}" exact class = "nav-link" active-class="active">
+            <router-link to="/ranking" exact class = "nav-link" active-class="active">
             Ranking
             </router-link>
           </li>
           <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
             <router-link to="/legal" exact class = "nav-link" active-class="active">
-            Terms and conditions
+            Términos y condiciones
             </router-link>
           </li>
           <div class="block">

@@ -12,7 +12,7 @@ const routes: Array<RouteRecordRaw> = [
   // },
   {
     path: '/',
-    name: 'Store',
+    name: "Tienda",
     component: () => import('~/modules/cart/pages/Store.vue'),
     meta: {
       layout: 'LayoutPage',
@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/ranking',
-    name: 'Ranking',
+    name: "Ranking",
     component: () => import('~/modules/cart/pages/ranking.vue'),
     meta: {
       layout: 'LayoutPage',
@@ -28,7 +28,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/legal',
-    name: 'Términos y Condiciones',
+    name: "Términos y Condiciones",
     component: () => import('~/modules/cart/pages/termsConditions.vue'),
     meta: {
       layout: 'LayoutPage',
