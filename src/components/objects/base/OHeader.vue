@@ -60,6 +60,11 @@
             Ranking
             </router-link>
           </li>
+          <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
+            <router-link :to="{ name: 'Terms and Conditions'}" exact class = "nav-link" active-class="active">
+            Terms and conditions
+            </router-link>
+          </li>
           <div class="block">
             <div class="ml-4 flex items-center md:ml-6">
               <div class="ml-3 relative">

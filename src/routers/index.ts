@@ -26,6 +26,14 @@ const routes: Array<RouteRecordRaw> = [
       layout: 'LayoutPage',
     },
   },
+  {
+    path: '/terms_and_conditions',
+    name: 'Terms and Conditions',
+    component: () => import('~/modules/cart/pages/termsConditions.vue'),
+    meta: {
+      layout: 'LayoutPage',
+    },
+  },
   // {
   //   path: '/:pathMatch(.*)*',
   //   name: 'NotFound',
