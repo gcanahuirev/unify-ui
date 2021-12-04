@@ -22,8 +22,9 @@
     <o-header></o-Header>
     <!-- overflow-hidden -->
     <o-container>
-      <h1 class="text-3xl font-bold">{{ route.name }}</h1>
+      <h1 class="text-3xl font-bold color=" style="color: #003188;" >{{ route.name }}</h1>
+      <slot />
     </o-container>
-    <slot />
+    
   </div>
 </template>

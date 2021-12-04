@@ -1,5 +1,4 @@
 <template>
-<div align="left" class="tab">
 <strong style="font-size:20px">1. AGREEMENT TO TERMS</strong>
 <p>
 These Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an entity (“you”) and <bdt class="block-container question question-in-editor" data-id="4ab94aa9-19d1-61e0-711e-42c7d186232b" data-type="question">Unify</bdt><bdt class="block-component"></bdt> ("<bdt class="block-component"></bdt><strong>Company</strong><bdt class="statement-end-if-in-editor"></bdt>," “<strong>we</strong>," “<strong>us</strong>," or “<strong>our</strong>”), concerning your access to and use of the website as well as any other media form, media channel, mobile website or mobile application related, linked, or otherwise connected thereto (collectively, the “Site”).
@@ -79,11 +78,9 @@ giuseppe.canahire.v@uni.pe
 diego.hurtadodemendoza.g@uni.pe
 </strong>
 </p>
-</div>
 </template>
 
 <style>
-.tab { margin-left: 40px; }
 p {
    margin: 10px 0;
 }
