@@ -9,7 +9,7 @@ const useHttp = ky.extend({
   prefixUrl: String(BASE_URL_API),
   hooks: {
     beforeRequest: [
-      (request) => {
+      (request: Request) => {
         if (useToken.get()) {
           request.headers.set('Authorization', `Bearer ${useToken.get()}`)
         }

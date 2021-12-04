@@ -1,70 +1,71 @@
-import { defineStore } from "pinia";
-import { ethers as Ethers, utils } from "ethers";
-import detectEthereumProvider from "@metamask/detect-provider";
-import { create as ipfsHttpClient } from 'ipfs-http-client'
-import { useToast } from "vue-toastification";
+import { defineStore } from 'pinia'
+import ky from 'ky'
+import { ethers as Ethers, utils } from 'ethers'
+import detectEthereumProvider from '@metamask/detect-provider'
+import { useToast } from 'vue-toastification'
 
-import type { NFTMarket, NFT } from "~/contracts";
-import { NFTMarket__factory, NFT__factory } from "~/contracts";
+import type { NFTMarket, NFT } from '~/contracts'
+import { NFTMarket__factory, NFT__factory } from '~/contracts'
 
-const NFT_ADDRESS = "0x5bACE38662A1Ded6aDa20DcA6C78D8ae25B4140d";
-const NFT_MARKET_ADDRESS = "0xAa77d2A8b60A6Be34EF06365F7CE28E7853306a2";
-const CLIENT_IPFS = ipfsHttpClient({ url: '/ip4/127.0.0.1/tcp/5001' })
+const NFT_ADDRESS = '0x5bACE38662A1Ded6aDa20DcA6C78D8ae25B4140d'
+const NFT_MARKET_ADDRESS = '0xAa77d2A8b60A6Be34EF06365F7CE28E7853306a2'
+const CLIENT_IPFS =
+  'https://ipfs.iuzepe.codes/api/v0/add?stream-channels=true&progress=false'
 
 const requestAccount = async () => {
-  const metamask: any = await detectEthereumProvider();
-  await metamask.request({ method: "eth_requestAccounts" });
-};
+  const metamask: any = await detectEthereumProvider()
+  await metamask.request({ method: 'eth_requestAccounts' })
+}
 
 const getContracts = async () => {
-  const metamask: any = await detectEthereumProvider();
-  const provider = new Ethers.providers.Web3Provider(metamask);
-  const signer = provider.getSigner();
+  const metamask: any = await detectEthereumProvider()
+  const provider = new Ethers.providers.Web3Provider(metamask)
+  const signer = provider.getSigner()
   const contractNFT = new Ethers.Contract(
     NFT_ADDRESS,
     NFT__factory.abi,
     signer
-  ) as NFT;
+  ) as NFT
   const contractNFTMarket = new Ethers.Contract(
     NFT_MARKET_ADDRESS,
     NFTMarket__factory.abi,
     // provider
     signer
-  ) as NFTMarket;
-  return { contractNFT, contractNFTMarket };
-};
-
-export interface Product {
-  itemId: string;
-  tokenId: string;
-  seller: string;
-  owner: string;
-  price: string;
-  path: string;
+  ) as NFTMarket
+  return { contractNFT, contractNFTMarket }
 }
 
-const toast = useToast();
+export interface Product {
+  itemId: string
+  tokenId: string
+  seller: string
+  owner: string
+  price: string
+  path: string
+}
 
-export const useMarketStore = defineStore("market", {
+const toast = useToast()
+
+export const useMarketStore = defineStore('market', {
   state: () => {
     return {
       products: [] as Array<Product>,
-    };
+    }
   },
 
   actions: {
     async getNFTMarket() {
-      const metamask: any = await detectEthereumProvider();
+      const metamask: any = await detectEthereumProvider()
       // await metamask.send('eth_requestAccounts')
-      if (typeof metamask !== "undefined") {
-        const { contractNFT, contractNFTMarket } = await getContracts();
+      if (typeof metamask !== 'undefined') {
+        const { contractNFT, contractNFTMarket } = await getContracts()
         try {
-          const data = await contractNFTMarket.fetchMarketItems();
+          const data = await contractNFTMarket.fetchMarketItems()
 
           const items = (await Promise.all(
             data.map(async (i) => {
-              const tokenUri = await contractNFT.tokenURI(i.tokenId);
-              const price = utils.formatUnits(i.price.toString(), "ether");
+              const tokenUri = await contractNFT.tokenURI(i.tokenId)
+              const price = utils.formatUnits(i.price.toString(), 'ether')
               const obj = {
                 itemId: i.itemId.toNumber(),
                 tokenId: i.tokenId.toNumber(),
@@ -72,63 +73,63 @@ export const useMarketStore = defineStore("market", {
                 owner: i.owner,
                 price,
                 path: tokenUri,
-              };
-              return obj;
+              }
+              return obj
             })
-          )) as unknown as Array<Product>;
+          )) as unknown as Array<Product>
 
-          this.products = items;
+          this.products = items
         } catch (err) {
-          console.log("Error: ", err);
+          console.log('Error: ', err)
         }
       }
     },
 
     async buyNFT(nft_price: string, itemId: number) {
-      const metamask: any = await detectEthereumProvider();
-      if (typeof metamask !== "undefined") {
-        await requestAccount();
-        const { contractNFTMarket } = await getContracts();
+      const metamask: any = await detectEthereumProvider()
+      if (typeof metamask !== 'undefined') {
+        await requestAccount()
+        const { contractNFTMarket } = await getContracts()
         try {
-          const price = utils.parseUnits(nft_price.toString(), "ether");
+          const price = utils.parseUnits(nft_price.toString(), 'ether')
           const transaction = await contractNFTMarket.createMarketSale(
             NFT_ADDRESS,
             itemId,
             {
               value: price,
             }
-          );
-          console.log("Hash Buy Item", transaction.hash);
-          await transaction.wait();
+          )
+          console.log('Hash Buy Item', transaction.hash)
+          await transaction.wait()
         } catch (err: any) {
           if (err.code === 4001) {
-            toast.info("Firma denegada");
+            toast.info('Firma denegada')
           }
           if (err.code === 'INSUFFICIENT_FUNDS') {
-            toast.warning("Fondos insuficientes", {
+            toast.warning('Fondos insuficientes', {
               timeout: 3000,
-            });
+            })
           }
-          console.log("Error: ", err.code);
+          console.log('Error: ', err.code)
         }
       }
     },
 
     async createTokenNFT(token_uri: string) {
-      const metamask: any = await detectEthereumProvider();
-      if (typeof metamask !== "undefined") {
-        await requestAccount();
-        const { contractNFT } = await getContracts();
+      const metamask: any = await detectEthereumProvider()
+      if (typeof metamask !== 'undefined') {
+        await requestAccount()
+        const { contractNFT } = await getContracts()
         try {
-          const transaction = await contractNFT.createToken(token_uri);
-          const tx = await transaction.wait();
-          let tokenId = 0;
-          let event = tx!.events![0];
-          let value = event.args![2];
-          tokenId = value.toNumber();
-          return { message: `New NFT created with tokenID N°${tokenId}`, tx };
+          const transaction = await contractNFT.createToken(token_uri)
+          const tx = await transaction.wait()
+          let tokenId = 0
+          let event = tx!.events![0]
+          let value = event.args![2]
+          tokenId = value.toNumber()
+          return { message: `New NFT created with tokenID N°${tokenId}`, tx }
         } catch (err) {
-          console.log("Error: ", err);
+          console.log('Error: ', err)
         }
       }
     },
@@ -138,52 +139,54 @@ export const useMarketStore = defineStore("market", {
       price_item: string,
       list_price: string
     ) {
-      const metamask: any = await detectEthereumProvider();
-      if (typeof metamask !== "undefined") {
-        await requestAccount();
-        const { contractNFTMarket } = await getContracts();
+      const metamask: any = await detectEthereumProvider()
+      if (typeof metamask !== 'undefined') {
+        await requestAccount()
+        const { contractNFTMarket } = await getContracts()
         try {
           const transaction = await contractNFTMarket.createMarketItem(
             NFT_ADDRESS,
             token_id,
-            utils.parseUnits(price_item, "ether"),
+            utils.parseUnits(price_item, 'ether'),
             { value: list_price }
-          );
-          const tx = await transaction.wait();
-          console.log("Values: ", tx);
-          return { message: `NFT N°${token_id} put up for sale `, tx };
+          )
+          const tx = await transaction.wait()
+          console.log('Values: ', tx)
+          return { message: `NFT N°${token_id} put up for sale `, tx }
         } catch (err) {
-          console.log("Error: ", err);
+          console.log('Error: ', err)
         }
       }
     },
 
     async getListingPrice() {
-      const metamask: any = await detectEthereumProvider();
-      if (typeof metamask !== "undefined") {
-        const { contractNFTMarket } = await getContracts();
+      const metamask: any = await detectEthereumProvider()
+      if (typeof metamask !== 'undefined') {
+        const { contractNFTMarket } = await getContracts()
         try {
-          const price = await contractNFTMarket.getListingPrice();
-          return price.toString();
+          const price = await contractNFTMarket.getListingPrice()
+          return price.toString()
         } catch (err) {
-          console.log("Error: ", err);
+          console.log('Error: ', err)
         }
       }
     },
 
-    async fileToIPFS(file: File) {
+    async fileToIPFS(file: File | Blob) {
       try {
-        const added = await CLIENT_IPFS.add(
-          file,
-          {
-            progress: (prog) => console.log(`received: ${prog}`)
-          }
-        )
-        const url = `https://ipfs.io/ipfs/${added.path}`
-        return url
+        const formData = new FormData()
+        formData.append('file', file)
+
+        const { Hash } = await ky
+          .post(CLIENT_IPFS, {
+            body: formData,
+          })
+          .json<{ Name: string; Hash: string; Size: string }>()
+
+        return `https://ipfs.iuzepe.codes/ipfs/${Hash}`
       } catch (error) {
         console.log('Error uploading file: ', error)
-      } 
-    }
+      }
+    },
   },
-});
+})

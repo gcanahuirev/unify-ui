@@ -49,7 +49,7 @@
             <div class="horizontalgap" style="width:10px"></div>
             <img src="src/assets/music_note.png" height=50 width=50>
           </div>
-          
+
           <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
             <router-link to="/" exact class = "nav-link" active-class="active">
             Tienda
@@ -58,6 +58,11 @@
           <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
             <router-link to="/ranking" exact class = "nav-link" active-class="active">
             Ranking
+            </router-link>
+          </li>
+          <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
+            <router-link to="/create-token" exact class = "nav-link" active-class="active">
+            Create Token
             </router-link>
           </li>
           <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
@@ -156,8 +161,8 @@
 <style>
 article {
   background: linear-gradient(
-    to right, 
-    hsl(98 100% 62%), 
+    to right,
+    hsl(98 100% 62%),
     hsl(204 100% 59%)
   );
   -webkit-background-clip: text;
