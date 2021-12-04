@@ -10,6 +10,7 @@
     "@metamask/detect-provider": "^1.2.0",
     "@vueuse/core": "^7.1.2",
     "ethers": "^5.5.1",
+    "ipfs-http-client": "^54.0.2",
     "ky": "^0.28.7",
     "pinia": "^2.0.4",
     "plyr": "^3.6.9",
