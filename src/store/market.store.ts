@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { ethers as Ethers, utils } from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider";
-import { create as ipfsHttpClient } from 'ipfs-http-client'
 import { useToast } from "vue-toastification";
 
 import type { NFTMarket, NFT } from "~/contracts";
@@ -9,7 +8,6 @@ import { NFTMarket__factory, NFT__factory } from "~/contracts";
 
 const NFT_ADDRESS = "0x5bACE38662A1Ded6aDa20DcA6C78D8ae25B4140d";
 const NFT_MARKET_ADDRESS = "0xAa77d2A8b60A6Be34EF06365F7CE28E7853306a2";
-const CLIENT_IPFS = ipfsHttpClient({ url: '/ip4/127.0.0.1/tcp/5001' })
 
 const requestAccount = async () => {
   const metamask: any = await detectEthereumProvider();
@@ -170,20 +168,5 @@ export const useMarketStore = defineStore("market", {
         }
       }
     },
-
-    async fileToIPFS(file: File) {
-      try {
-        const added = await CLIENT_IPFS.add(
-          file,
-          {
-            progress: (prog) => console.log(`received: ${prog}`)
-          }
-        )
-        const url = `https://ipfs.io/ipfs/${added.path}`
-        return url
-      } catch (error) {
-        console.log('Error uploading file: ', error)
-      } 
-    }
   },
 });
