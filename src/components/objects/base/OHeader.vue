@@ -50,7 +50,11 @@
             <img src="src/assets/music_note.png" height=50 width=50>
           </div>
           
-          
+          <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
+            <router-link :to="{ name: 'Store'}" exact class = "nav-link" active-class="active">
+            Store
+            </router-link>
+          </li>
           <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
             <router-link :to="{ name: 'Ranking'}" exact class = "nav-link" active-class="active">
             Ranking
