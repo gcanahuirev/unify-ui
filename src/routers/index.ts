@@ -18,6 +18,14 @@ const routes: Array<RouteRecordRaw> = [
       layout: 'LayoutPage',
     },
   },
+  {
+    path: '/ranking',
+    name: 'Ranking',
+    component: () => import('~/modules/cart/pages/ranking.vue'),
+    meta: {
+      layout: 'LayoutPage',
+    },
+  },
   // {
   //   path: '/:pathMatch(.*)*',
   //   name: 'NotFound',
