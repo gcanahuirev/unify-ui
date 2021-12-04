@@ -43,9 +43,10 @@ table td:last-child {
 table tbody tr:nth-child(2n) td {
   background: #D4D8F9;
 }
-img{
+.circular {
   clip-path: circle()
 }
+
 </style>
 <script>
 function imageExists(image_url){
@@ -104,7 +105,7 @@ function generateRanking(table, data) {
         }
         img.style.height = '50px';
         img.style.width = '50px';
-        img.class="circular";
+        img.className="circular";
         cell.appendChild(img);
       }
     }
