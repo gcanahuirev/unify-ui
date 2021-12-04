@@ -76,7 +76,7 @@ function generateRanking(table, data) {
     cell.appendChild(text);
     for (let key in element) {
       let cell = row.insertCell();
-      
+
       if (key == "revenue") {
         var span = document.createElement('span');
         let text = document.createTextNode(element[key] + " ETH");
@@ -93,7 +93,7 @@ function generateRanking(table, data) {
         let text = document.createTextNode(element[key]);
         cell.appendChild(text);
       }
-      
+
       if (key == "name") {
         let cell = row.insertCell();
         var img = document.createElement('img');
