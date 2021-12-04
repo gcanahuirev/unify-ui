@@ -79,8 +79,14 @@ function generateRanking(table, data) {
       
       if (key == "revenue") {
         var span = document.createElement('span');
-        let text = document.createTextNode('$' + element[key]);
+        let text = document.createTextNode(element[key] + " ETH");
         span.appendChild(text);
+        var img = document.createElement('img');
+        img.style.height = '50px';
+        img.style.width = '50px';
+        img.src = assetsFolder + "eth.png";
+        img.style.display= "inline-block";
+        span.appendChild(img);
         span.style.color = 'green';
         cell.appendChild(span);
       } else {
