@@ -47,7 +47,11 @@
     </audio>
     </div>
     <div class="flex items-center justify-between px-4 py-2 text-black">
-      <h1 class="text-gray-200 font-bold text-xl">{{ price }}</h1>
+      <div class="flex items-center px-4 py-2 text-black">
+        <h1 class="text-gray-200 font-bold text-xl">Precio: {{ price }} ETH </h1>
+        <img src="src/assets/eth.png" height=50 width=50> 
+      </div>
+      
       <button
         class="px-3 py-1 bg-primary text-sm text-black font-bold rounded"
         @click.stop="$emit('action')"
