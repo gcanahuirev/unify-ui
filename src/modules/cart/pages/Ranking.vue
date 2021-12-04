@@ -43,9 +43,10 @@ table td:last-child {
 table tbody tr:nth-child(2n) td {
   background: #D4D8F9;
 }
-img{
+.circular {
   clip-path: circle()
 }
+
 </style>
 <script>
 function imageExists(image_url){
@@ -76,7 +77,7 @@ function generateRanking(table, data) {
     cell.appendChild(text);
     for (let key in element) {
       let cell = row.insertCell();
-      
+
       if (key == "revenue") {
         var span = document.createElement('span');
         let text = document.createTextNode(element[key] + " ETH");
@@ -93,7 +94,7 @@ function generateRanking(table, data) {
         let text = document.createTextNode(element[key]);
         cell.appendChild(text);
       }
-      
+
       if (key == "name") {
         let cell = row.insertCell();
         var img = document.createElement('img');
@@ -104,7 +105,7 @@ function generateRanking(table, data) {
         }
         img.style.height = '50px';
         img.style.width = '50px';
-        img.class="circular";
+        img.className="circular";
         cell.appendChild(img);
       }
     }

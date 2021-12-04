@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import { ethers as Ethers, utils } from "ethers";
+import detectEthereumProvider from "@metamask/detect-provider";
+import { useToast } from "vue-toastification";
 
 import type { NFTMarket, NFT } from "~/contracts";
 import { NFTMarket__factory, NFT__factory } from "~/contracts";
@@ -8,11 +10,13 @@ const NFT_ADDRESS = "0x5bACE38662A1Ded6aDa20DcA6C78D8ae25B4140d";
 const NFT_MARKET_ADDRESS = "0xAa77d2A8b60A6Be34EF06365F7CE28E7853306a2";
 
 const requestAccount = async () => {
-  await window.ethereum.request({ method: "eth_requestAccounts" });
+  const metamask: any = await detectEthereumProvider();
+  await metamask.request({ method: "eth_requestAccounts" });
 };
 
-const getContracts = () => {
-  const provider = new Ethers.providers.Web3Provider(window.ethereum);
+const getContracts = async () => {
+  const metamask: any = await detectEthereumProvider();
+  const provider = new Ethers.providers.Web3Provider(metamask);
   const signer = provider.getSigner();
   const contractNFT = new Ethers.Contract(
     NFT_ADDRESS,
@@ -37,6 +41,8 @@ export interface Product {
   path: string;
 }
 
+const toast = useToast();
+
 export const useMarketStore = defineStore("market", {
   state: () => {
     return {
@@ -46,9 +52,10 @@ export const useMarketStore = defineStore("market", {
 
   actions: {
     async getNFTMarket() {
-      await window.ethereum.send("eth_requestAccounts");
-      if (typeof window.ethereum !== "undefined") {
-        const { contractNFT, contractNFTMarket } = getContracts();
+      const metamask: any = await detectEthereumProvider();
+      // await metamask.send('eth_requestAccounts')
+      if (typeof metamask !== "undefined") {
+        const { contractNFT, contractNFTMarket } = await getContracts();
         try {
           const data = await contractNFTMarket.fetchMarketItems();
 
@@ -76,9 +83,10 @@ export const useMarketStore = defineStore("market", {
     },
 
     async buyNFT(nft_price: string, itemId: number) {
-      if (typeof window.ethereum !== "undefined") {
+      const metamask: any = await detectEthereumProvider();
+      if (typeof metamask !== "undefined") {
         await requestAccount();
-        const { contractNFTMarket } = getContracts();
+        const { contractNFTMarket } = await getContracts();
         try {
           const price = utils.parseUnits(nft_price.toString(), "ether");
           const transaction = await contractNFTMarket.createMarketSale(
@@ -90,16 +98,25 @@ export const useMarketStore = defineStore("market", {
           );
           console.log("Hash Buy Item", transaction.hash);
           await transaction.wait();
-        } catch (err) {
-          console.log("Error: ", err);
+        } catch (err: any) {
+          if (err.code === 4001) {
+            toast.info("Firma denegada");
+          }
+          if (err.code === 'INSUFFICIENT_FUNDS') {
+            toast.warning("Fondos insuficientes", {
+              timeout: 3000,
+            });
+          }
+          console.log("Error: ", err.code);
         }
       }
     },
 
     async createTokenNFT(token_uri: string) {
-      if (typeof window.ethereum !== "undefined") {
+      const metamask: any = await detectEthereumProvider();
+      if (typeof metamask !== "undefined") {
         await requestAccount();
-        const { contractNFT } = getContracts();
+        const { contractNFT } = await getContracts();
         try {
           const transaction = await contractNFT.createToken(token_uri);
           const tx = await transaction.wait();
@@ -119,9 +136,10 @@ export const useMarketStore = defineStore("market", {
       price_item: string,
       list_price: string
     ) {
-      if (typeof window.ethereum !== "undefined") {
+      const metamask: any = await detectEthereumProvider();
+      if (typeof metamask !== "undefined") {
         await requestAccount();
-        const { contractNFTMarket } = getContracts();
+        const { contractNFTMarket } = await getContracts();
         try {
           const transaction = await contractNFTMarket.createMarketItem(
             NFT_ADDRESS,
@@ -138,16 +156,17 @@ export const useMarketStore = defineStore("market", {
       }
     },
 
-    async getListingPrice () {
-      if (typeof window.ethereum !== 'undefined') {
-        const { contractNFTMarket } = getContracts();
+    async getListingPrice() {
+      const metamask: any = await detectEthereumProvider();
+      if (typeof metamask !== "undefined") {
+        const { contractNFTMarket } = await getContracts();
         try {
-          const price = await contractNFTMarket.getListingPrice()
-          return price.toString()
+          const price = await contractNFTMarket.getListingPrice();
+          return price.toString();
         } catch (err) {
-          console.log('Error: ', err)
+          console.log("Error: ", err);
         }
       }
-    }
+    },
   },
 });
