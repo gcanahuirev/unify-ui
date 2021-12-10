@@ -188,5 +188,98 @@ export const useMarketStore = defineStore('market', {
         console.log('Error uploading file: ', error)
       }
     },
+
+    async fetchMyNFTs() {
+      const metamask: any = await detectEthereumProvider()
+      if (typeof metamask !== 'undefined') {
+        const { contractNFTMarket, contractNFT } = await getContracts()
+        try {
+          const data = await contractNFTMarket.fetchMyNFTs();
+          const items = await Promise.all(
+            data.map(async (i) => {
+              const tokenUri = await contractNFT.tokenURI(i.tokenId);
+              const price = utils.formatUnits(i.price.toString(), "ether");
+              const obj = {
+                itemId: i.itemId.toNumber(),
+                tokenId: i.tokenId.toNumber(),
+                seller: i.seller,
+                owner: i.owner,
+                price: price,
+                path: tokenUri,
+              };
+              return obj;
+            })
+          );
+          console.log("Items: ", items);
+
+          return items;
+        } catch (err) {
+          console.log('Error: ', err)
+        }
+      }
+    },
+
+    async fetchMarketItems() {
+      const metamask: any = await detectEthereumProvider()
+      if (typeof metamask !== "undefined") {
+        const { contractNFT, contractNFTMarket } = await getContracts();
+        try {
+          const data = await contractNFTMarket.fetchMarketItems();
+          let count = 0;
+
+          const items = await Promise.all(
+            data.map(async (i) => {
+              count++
+              console.log(`i[${count}]:`, i);
+              const tokenUri = await contractNFT.tokenURI(i.tokenId);
+              const price = utils.formatUnits(i.price.toString(), "ether");
+              const obj = {
+                itemId: i.itemId.toNumber(),
+                tokenId: i.tokenId.toNumber(),
+                seller: i.seller,
+                owner: i.owner,
+                price,
+                path: tokenUri,
+              };
+              return obj;
+            })
+          );
+
+          console.log("Items: ", items);
+          return items;
+        } catch (err) {
+          console.log("Error: ", err);
+        }
+      }
+    },
+
+    async fetchItemsCreated() {
+      const metamask: any = await detectEthereumProvider()
+      if (typeof metamask !== "undefined") {
+        const { contractNFT, contractNFTMarket } = await getContracts();
+        try {
+          const data = await contractNFTMarket.fetchItemsCreated();
+          const items = await Promise.all(
+            data.map(async (i) => {
+              const tokenUri = await contractNFT.tokenURI(i.tokenId);
+              const price = utils.formatUnits(i.price.toString(), "ether");
+              const obj = {
+                tokenId: i.tokenId.toNumber(),
+                seller: i.seller,
+                owner: i.owner,
+                sold: i.sold,
+                price: price,
+                path: tokenUri,
+              };
+              return obj;
+            })
+          );
+
+          console.log("Items: ", items);
+        } catch (err) {
+          console.log("Error: ", err);
+        }
+      }
+    }
   },
 })
