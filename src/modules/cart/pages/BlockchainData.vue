@@ -27,7 +27,7 @@
         v-for="nft in NFTs"
         :key="nft.itemId"
         class="flex justify-between mt-6 p-4 rounded-lg bg-white"
-        style="width: 60%;"
+        style="width: 70%;"
       >
         <table class="items-table" style="width: 20%;">
           <tbody>
