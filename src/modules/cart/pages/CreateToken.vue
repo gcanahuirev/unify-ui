@@ -12,6 +12,7 @@
         const description = target[1].value
         const image = target[2].files[0]
         const audio = target[3].files[0]
+        const price = target[4].value
 
         const imageUrl = await store.fileToIPFS(image)
         const audioUrl = await store.fileToIPFS(audio)
@@ -30,7 +31,9 @@
         const url = await store.fileToIPFS(blob)
         console.log({url})
         const token_id = await store.createTokenNFT(String(url))
-        console.log({ token_id });
+        if(token_id) {
+          store.createNFTMarket(token_id, price)
+        }
       }
 
       return {
@@ -43,7 +46,7 @@
 <template>
   <div class="signup-form">
     <form @submit.prevent="handleSubmit">
-      <h2>Crear Token</h2>
+      <h2>Nuevo</h2>
       <p>Por favor llene los siguientes datos</p>
       <hr />
       <div class="form-group">
@@ -79,6 +82,14 @@
           name="sound"
           accept="audio/mpeg"
           required="required"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          name="price"
+          placeholder="Precio"
         />
       </div>
       <div class="form-group">

@@ -127,14 +127,14 @@ export const useMarketStore = defineStore('market', {
           let event = tx!.events![0]
           let value = event.args![2]
           tokenId = value.toNumber()
-          return { message: `New NFT created with tokenID N°${tokenId}`, tx }
+          return tokenId
         } catch (err) {
           console.log('Error: ', err)
         }
       }
     },
 
-    async createNFTMarket(token_id: string, price_item: string) {
+    async createNFTMarket(token_id: number, price_item: string) {
       const metamask: any = await detectEthereumProvider()
       if (typeof metamask !== 'undefined') {
         await requestAccount()
