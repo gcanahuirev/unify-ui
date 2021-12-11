@@ -50,9 +50,9 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/list-item-created',
-    name: 'ListItemCreated',
-    component: () => import('~/modules/cart/pages/ListItemCreated.vue'),
+    path: '/blockchain',
+    name: 'Datos BlockChain',
+    component: () => import('~/modules/cart/pages/BlockchainData.vue'),
     meta: {
       layout: 'LayoutPage',
     },
