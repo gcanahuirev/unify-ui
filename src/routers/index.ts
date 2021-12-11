@@ -12,6 +12,13 @@ const routes: Array<RouteRecordRaw> = [
   // },
   {
     path: '/',
+    component: () => import('~/modules/cart/pages/Home.vue'),
+    meta: {
+      layout: 'LayoutPage',
+    },
+  },
+  {
+    path: '/store',
     name: 'Tienda',
     component: () => import('~/modules/cart/pages/Store.vue'),
     meta: {
