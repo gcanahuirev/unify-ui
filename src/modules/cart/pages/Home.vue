@@ -11,8 +11,8 @@
         </h1>
         <span class="home-text03 section-Text">
           <span class="home-text04">
-            Unify es una aplicación web para descargar música a través de NFT,
-            apoyado en blockchain. Cada NFT es único y es la garantía de que has
+            Unify es una aplicación web para descargar música a través de NFT (Non-Fungible Token),
+            apoyado en blockchain. Cada NFT es un token único que recibirás al comprar la canción de tu preferencia y es la garantía de que la canción es auténtica y has
             apoyado a tu artista.
           </span>
         </span>
