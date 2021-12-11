@@ -35,6 +35,14 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/list-token',
+    name: 'ListToken',
+    component: () => import('~/modules/cart/pages/ListToken.vue'),
+    meta: {
+      layout: 'LayoutPage',
+    },
+  },
+  {
     path: '/legal',
     name: 'Términos y Condiciones',
     component: () => import('~/modules/cart/pages/TermsConditions.vue'),
