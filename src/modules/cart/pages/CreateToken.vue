@@ -116,7 +116,6 @@
   }
   .signup-form {
     width: 400px;
-    margin: 30px auto;
   }
   .signup-form form {
     color: #999;
