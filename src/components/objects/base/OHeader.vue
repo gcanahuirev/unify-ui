@@ -51,7 +51,7 @@
           </div>
 
           <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
-            <router-link to="/" exact class = "nav-link" active-class="active">
+            <router-link to="/store" exact class = "nav-link" active-class="active">
             Tienda
             </router-link>
           </li>
