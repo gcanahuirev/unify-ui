@@ -50,6 +50,14 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/list-item-created',
+    name: 'ListItemCreated',
+    component: () => import('~/modules/cart/pages/ListItemCreated.vue'),
+    meta: {
+      layout: 'LayoutPage',
+    },
+  },
+  {
     path: '/legal',
     name: 'Términos y Condiciones',
     component: () => import('~/modules/cart/pages/TermsConditions.vue'),

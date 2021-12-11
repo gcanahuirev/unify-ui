@@ -71,6 +71,11 @@
             </router-link>
           </li>
           <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
+            <router-link to="/list-item-created" exact class = "nav-link" active-class="active">
+            List Items Created
+            </router-link>
+          </li>
+          <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
             <router-link to="/legal" exact class = "nav-link" active-class="active">
             Términos y condiciones
             </router-link>
