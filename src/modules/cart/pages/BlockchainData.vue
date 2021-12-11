@@ -45,11 +45,11 @@
               <td>{{ nft.price }}</td>
             </tr>
             <tr>
-              <td class="items-td"><strong>Dueño</strong></td>
+              <td class="items-td"><strong>Comprador</strong></td>
               <td>{{ nft.owner }}</td>
             </tr>
             <tr>
-              <td class="items-td"><strong>Vendedor</strong></td>
+              <td class="items-td"><strong>Artista</strong></td>
               <td>{{ nft.seller }}</td>
             </tr>
              <tr>
