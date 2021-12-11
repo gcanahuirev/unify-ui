@@ -62,14 +62,14 @@
           </li>
           <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
             <router-link to="/create-token" exact class = "nav-link" active-class="active">
-            Create Token
+            Crear NFT
             </router-link>
           </li>
-          <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
+          <!-- <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
             <router-link to="/list-token" exact class = "nav-link" active-class="active">
             List Token
             </router-link>
-          </li>
+          </li> -->
           <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
             <router-link to="/list-item-created" exact class = "nav-link" active-class="active">
             List Items Created

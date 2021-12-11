@@ -14,16 +14,16 @@
         })
       })
 
-      const createNFTMarket = async (token_id: string, event: Event) => {
+      /* const createNFTMarket = async (token_id: string, event: Event) => {
         const { target } = event as any
         const price = target[0].value
         await store.createNFTMarket(token_id, price)
         store.fetchMyNFTs().then((nfts) => {
           NFTs.value = nfts
         })
-      }
+      } */
 
-      return { NFTs, createNFTMarket }
+      return { NFTs }
     },
   })
 </script>
@@ -43,7 +43,7 @@
           <p>Price: {{ nft.price }}</p>
           <p>Owner: {{ nft.owner }}</p>
         </div>
-        <form
+        <!-- <form
           @submit.prevent="(e) => createNFTMarket(nft.tokenId, e)"
           class="flex flex-col justify-between"
         >
@@ -59,7 +59,7 @@
           >
             Subir al market
           </button>
-        </form>
+        </form> -->
       </li>
     </ul>
   </section>
