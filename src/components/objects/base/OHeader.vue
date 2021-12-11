@@ -71,8 +71,8 @@
             </router-link>
           </li> -->
           <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
-            <router-link to="/list-item-created" exact class = "nav-link" active-class="active">
-            List Items Created
+            <router-link to="/blockchain" exact class = "nav-link" active-class="active">
+            Datos Block Chain
             </router-link>
           </li>
           <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
