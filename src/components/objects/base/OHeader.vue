@@ -155,7 +155,7 @@ export default defineComponent({
             v-if="userData && userData.roles == 'user'"
           >
             <router-link to="/list-token" exact class = "nav-link" active-class="active">
-            List Token
+            Mis NFTs
             </router-link>
           </li>
           <li

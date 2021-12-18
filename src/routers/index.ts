@@ -43,7 +43,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/list-token',
-    name: 'ListToken',
+    name: 'Lista de NFTs',
     component: () => import('~/modules/cart/pages/ListToken.vue'),
     meta: {
       layout: 'LayoutPage',
