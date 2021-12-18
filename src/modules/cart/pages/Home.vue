@@ -32,7 +32,7 @@
             <span v-html="rawf93z"></span>
           </span>
           <br />
-          <span>Sube tus canciones, recibe los pagos justos por ella</span>
+          <span>Sube tus canciones y recibe los pagos justos por ella</span>
         </h1>
         <span class="home-text08 section-Text">
           Con la tecnología de blockchain ofrecemos transparencia e
