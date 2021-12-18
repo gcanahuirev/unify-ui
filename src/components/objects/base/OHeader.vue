@@ -4,6 +4,7 @@ import OModal from "~/components/objects/OModal.vue";
 import { useAuthStore } from "~/store/auth.store";
 import { useUser } from "~/hooks/useToken";
 import { useRouter } from "vue-router";
+import { useToast } from 'vue-toastification'
 
 export default defineComponent({
   components: {
@@ -19,31 +20,53 @@ export default defineComponent({
     const router = useRouter();
     const userData = ref<any>(useUser.get());
 
+    const toast = useToast()
     const store = useAuthStore();
 
     const login = async (e: Event) => {
-      const target = e.target as unknown as HTMLInputElement[];
-      await store.login({
-        email: target[0].value,
-        password: target[1].value,
-      });
-      showModalLogin.value = false;
-      router.push("/");
-      userData.value = useUser.get();
+      try {
+        const target = e.target as unknown as HTMLInputElement[];
+        await store.login({
+          email: target[0].value,
+          password: target[1].value,
+        });
+        showModalLogin.value = false;
+        router.push("/");
+        userData.value = useUser.get();
+        toast.success("Bienvenido a unify",{
+          timeout: 3000,
+        })
+      } catch (error: any) {
+        toast.error("Usuario o contraseña incorrecta", {
+          timeout: 3000,
+        });
+      }
     };
 
     const register = async (e: Event) => {
-      const target = e.target as unknown as HTMLInputElement[];
-      await store.register({
-        name: target[0].value,
-        email: target[1].value,
-        password: target[2].value,
-      });
-      await store.login({
-        email: target[1].value,
-        password: target[2].value,
-      });
-      showModalRegister.value = false;      
+      try {
+        const target = e.target as unknown as HTMLInputElement[];
+        await store.register({
+          name: target[0].value,
+          email: target[1].value,
+          password: target[2].value,
+          roles: target[3].value,
+        });
+        await store.login({
+          email: target[1].value,
+          password: target[2].value,
+        });
+        router.push("/");
+        showModalRegister.value = false;
+        userData.value = useUser.get();
+        toast.success("Bienvenido a unify",{
+          timeout: 3000,
+        })
+      } catch (error: any) {
+        toast.error("Registro fallido", {
+          timeout: 3000,
+        });
+      }
     };
 
     const logout = () => {
@@ -272,10 +295,14 @@ export default defineComponent({
     </OModal>
     <OModal :show="showModalRegister" @close="showModalRegister = false">
       <h3>Registrar</h3>
-      <form @submit.prevent="register" class="flex flex-col pt-8">
+      <form @submit.prevent="register" class="flex flex-col pt-8">        
         <input type="text" placeholder="Name" class="rounded-md mb-4" />
         <input type="email" placeholder="Email" class="rounded-md mb-4" />
         <input type="password" placeholder="Password" class="rounded-md mb-4" />
+        <select class="rounded-md mb-4 pl-3 pt-2 pb-2">
+          <option value="user">Usuario</option>
+          <option value="artist">Artista</option>
+        </select>
         <button
           class="px-3 py-2 bg-primary text-sm text-black font-bold rounded"
           type="submit"
