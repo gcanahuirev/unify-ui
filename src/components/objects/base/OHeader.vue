@@ -120,11 +120,15 @@ export default defineComponent({
               Crear NFT
             </router-link>
           </li>
-          <!-- <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
+          <li
+            class="nav-item"
+            style="list-style-type: none; color: white; font-weight: bold"
+            v-if="userData && userData.roles == 'user'"
+          >
             <router-link to="/list-token" exact class = "nav-link" active-class="active">
             List Token
             </router-link>
-          </li> -->
+          </li>
           <li
             class="nav-item"
             style="list-style-type: none; color: white; font-weight: bold"

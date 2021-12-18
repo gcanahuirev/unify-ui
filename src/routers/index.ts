@@ -41,14 +41,14 @@ const routes: Array<RouteRecordRaw> = [
       layout: 'LayoutPage',
     },
   },
-  /* {
+  {
     path: '/list-token',
     name: 'ListToken',
     component: () => import('~/modules/cart/pages/ListToken.vue'),
     meta: {
       layout: 'LayoutPage',
     },
-  }, */
+  },
   {
     path: '/blockchain',
     name: 'Datos BlockChain',
