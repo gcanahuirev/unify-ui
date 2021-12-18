@@ -32,13 +32,13 @@
             <span v-html="rawf93z"></span>
           </span>
           <br />
-          <span>Sube tus canciones y recibe los pagos justos por ella</span>
+          <span>Sube tus canciones, recibe los pagos justos por ella</span>
         </h1>
         <span class="home-text08 section-Text">
           Con la tecnología de blockchain ofrecemos transparencia e
           inalterabilidad. Podrás crear tus canciones, subir la letra, recibir
           crédito y ganancias por ella. Podrás ver en todo momento las
-          transacciones en la blockchain.
+          transacciones en la blockchain. Además en el blockchain se protegerán tus derechos de autor.
         </span>
         <button class="home-cta-btn1 anchor button">Empezar</button>
       </div>
@@ -47,6 +47,33 @@
         src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDMxfHxtdXNpY3xlbnwwfHx8fDE2MzkxNzY5Mzk&amp;ixlib=rb-1.2.1&amp;h=1500"
         class="home-image1"
       />
+    </div>
+    <div class="home-section-separator"></div>
+    <div id="NFT" class="home-features">
+      <div class="home-container1">
+        <div class="home-container2">
+          <div class="home-heading-container">
+            <h2 class="home-text09 section-Heading">¿Qué es un NFT?</h2>
+            <span class="home-text-nft section-Text">
+              Sus siglas significan "Non-Fungible Token" o "Token no fungible" en español. Esencialmente es un activo
+              digital que es único y no puede ser reemplazado por otro. Además, la información sobre quién es el propietario
+              actual queda guardado en la blockchain.
+            </span>
+            <span class="home-text-nft section-Text">
+              En la industria de la música, los artistas crean canciones y pueden crear copias de cada una de sus canciones
+              para venderlas. Cada copia puede ser asociado a un NFT, lo cual , como activo digital, la hará diferente a los
+              demás al estar asociado con un token único. Al comprar una canción como NFT, aparecerás como propietario de esa 
+              copia en la blockchain y será tu certificado para comprobar que has apoyado a tu artista y posees válidamente
+              una copia de su canción.
+            </span>
+          </div>
+        </div>
+        <img
+          src="/src/assets/nft.jpeg"
+          alt="image"
+          class="home-image"
+        />
+      </div>
     </div>
     <div class="home-section-separator"></div>
     <div id="features" class="home-features">
@@ -220,6 +247,10 @@
 }
 .home-text {
   color: var(--dl-color-primary-500);
+}
+.home-text-nft {
+  color: var(--dl-color-gray-black);
+  text-align: justify;
 }
 .home-text03 {
   color: var(--dl-color-gray-500);
