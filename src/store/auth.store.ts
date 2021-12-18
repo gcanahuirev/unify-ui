@@ -23,9 +23,9 @@ export const useAuthStore = defineStore("auth", {
       useUser.set(data.user);
       useToken.set(data.access_token);
     },
-    async register({ name, email, password }: { [key: string]: string }) {
+    async register({ name, email, password, roles }: { [key: string]: string }) {
       const { data } = await useHttp
-        .post("auth/register", {
+        .post("auth/register?roles=" + roles, {
           headers: {
             "Content-Type": "application/json",
           },
