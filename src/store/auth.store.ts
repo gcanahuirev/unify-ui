@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { useHttp } from '~/hooks/useHttp'
-import { useToken } from '~/hooks/useToken'
+import { useToken, useUser } from '~/hooks/useToken'
+import { useRouter } from 'vue-router'
 
 export const useAuthStore = defineStore('auth', {
   state: () => {
@@ -20,7 +21,10 @@ export const useAuthStore = defineStore('auth', {
         })
         .then((res) => res.json())
 
+      useUser.set(data.user)
       useToken.set(data.access_token)
+      const router = useRouter()
+      router.push('/')
     },
   },
 })

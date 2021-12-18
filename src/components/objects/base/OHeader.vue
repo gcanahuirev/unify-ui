@@ -1,68 +1,105 @@
 <script lang="ts">
-  import { defineComponent, ref } from 'vue'
-  import OModal from '~/components/objects/OModal.vue'
-  import { useAuthStore } from '~/store/auth.store'
+import { defineComponent, ref } from "vue";
+import OModal from "~/components/objects/OModal.vue";
+import { useAuthStore } from "~/store/auth.store";
+import { useUser } from "~/hooks/useToken";
 
-  export default defineComponent({
-    components: {
-      OModal,
-    },
-    setup() {
-      const menuRef = ref<HTMLElement | undefined>()
-      const menuActive = ref<boolean>(false)
-      const menuToggle = () => (menuActive.value = !menuActive.value)
-      const showModalLogin = ref<boolean>(false)
+export default defineComponent({
+  components: {
+    OModal,
+  },
+  setup() {
+    const menuRef = ref<HTMLElement | undefined>();
+    const menuActive = ref<boolean>(false);
+    const menuToggle = () => (menuActive.value = !menuActive.value);
+    const showModalLogin = ref<boolean>(false);
+    const showModalLogout = ref<boolean>(false);
+    const userData = useUser.get();
 
-      const store = useAuthStore()
+    const store = useAuthStore();
 
-      const login = async (e: Event) => {
-        const target = e.target as unknown as HTMLInputElement[]
-        await store.login({
-          email: target[0].value,
-          password: target[1].value,
-        })
-        showModalLogin.value = false
-      }
+    const login = async (e: Event) => {
+      const target = e.target as unknown as HTMLInputElement[];
+      await store.login({
+        email: target[0].value,
+        password: target[1].value,
+      });
+      showModalLogin.value = false;
+    };
 
-      return {
-        menuRef,
-        menuActive,
-        menuToggle,
-        showModalLogin,
-        login,
-      }
-    },
-  })
+    const logout = () => {
+      useUser.logout()
+    }
+
+    return {
+      menuRef,
+      menuActive,
+      menuToggle,
+      showModalLogin,
+      showModalLogout,
+      login,
+      userData,
+      logout
+    };
+  },
+});
 </script>
 
 <template>
   <header>
-    <nav class="bg-primary shadow" style="background:#03254C;">
+    <nav class="bg-primary shadow" style="background: #03254c">
       <div class="max-w-7xl mx-auto px-8">
         <div class="flex items-center justify-between h-16">
           <div class="flex items-center">
             <a class="flex-shrink-0" href="/">
               <article>
-                <strong style="font-size:30px">Unify dapp music</strong>
+                <strong style="font-size: 30px">Unify dapp music</strong>
               </article>
             </a>
-            <div class="horizontalgap" style="width:10px"></div>
-            <img src="src/assets/music_note.png" height=50 width=50>
+            <div class="horizontalgap" style="width: 10px"></div>
+            <img src="src/assets/music_note.png" height="50" width="50" />
           </div>
 
-          <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
-            <router-link to="/store" exact class = "nav-link" active-class="active">
-            Tienda
+          <li
+            class="nav-item"
+            style="list-style-type: none; color: white; font-weight: bold"
+            v-if="userData && userData.roles == 'user'"
+          >
+            <router-link
+              to="/store"
+              exact
+              class="nav-link"
+              active-class="active"
+            >
+              Tienda
             </router-link>
           </li>
-          <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
-            <router-link to="/ranking" exact class = "nav-link" active-class="active">
-            Ranking
+          <li
+            class="nav-item"
+            style="list-style-type: none; color: white; font-weight: bold"
+            v-if="userData && userData.roles == 'user'"
+          >
+            <router-link
+              to="/ranking"
+              exact
+              class="nav-link"
+              active-class="active"
+            >
+              Ranking
             </router-link>
           </li>
-          <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
-            <router-link to="/create-token" exact class = "nav-link" active-class="active">
-            Crear NFT
+          <li
+            class="nav-item"
+            style="list-style-type: none; color: white; font-weight: bold"
+            v-if="userData && userData.roles == 'artist'"
+          >
+            <router-link
+              to="/create-token"
+              exact
+              class="nav-link"
+              active-class="active"
+            >
+              Crear NFT
             </router-link>
           </li>
           <!-- <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
@@ -70,14 +107,32 @@
             List Token
             </router-link>
           </li> -->
-          <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
-            <router-link to="/blockchain" exact class = "nav-link" active-class="active">
-            Datos Block Chain
+          <li
+            class="nav-item"
+            style="list-style-type: none; color: white; font-weight: bold"
+            v-if="userData && userData.roles == 'artist'"
+          >
+            <router-link
+              to="/blockchain"
+              exact
+              class="nav-link"
+              active-class="active"
+            >
+              Datos Block Chain
             </router-link>
           </li>
-          <li class="nav-item" style="list-style-type: none;color: white;font-weight: bold;">
-            <router-link to="/legal" exact class = "nav-link" active-class="active">
-            Términos y condiciones
+          <li
+            class="nav-item"
+            style="list-style-type: none; color: white; font-weight: bold"
+            v-if="userData && userData.roles == 'user'"
+          >
+            <router-link
+              to="/legal"
+              exact
+              class="nav-link"
+              active-class="active"
+            >
+              Términos y condiciones
             </router-link>
           </li>
           <div class="block">
@@ -138,9 +193,27 @@
                         "
                         role="menuitem"
                         @click="showModalLogin = true"
+                        v-if="!userData"
                       >
                         <span class="flex flex-col">
                           <span> Login </span>
+                        </span>
+                      </a>
+                      <a
+                        href="#"
+                        class="
+                          block block
+                          px-4
+                          py-2
+                          text-md text-gray-700
+                          hover:bg-primary hover:text-white
+                        "
+                        role="menuitem"
+                        @click="showModalLogout = true"
+                        v-if="userData"
+                      >
+                        <span class="flex flex-col">
+                          <span> Logout </span>
                         </span>
                       </a>
                     </div>
@@ -155,7 +228,7 @@
     <OModal :show="showModalLogin" @close="showModalLogin = false">
       <h3>Ingresar</h3>
       <form @submit.prevent="login" class="flex flex-col pt-8">
-        <input type="email" placeholder="Email"  class="rounded-md mb-4"/>
+        <input type="email" placeholder="Email" class="rounded-md mb-4" />
         <input type="password" placeholder="Password" class="rounded-md mb-4" />
         <button
           class="px-3 py-2 bg-primary text-sm text-black font-bold rounded"
@@ -164,17 +237,33 @@
           Login
         </button>
       </form>
-      <span class="text-sm italic font-medium"><a href="#">Olvidaste la contraseña</a></span>
+      <span class="text-sm italic font-medium"
+        ><a href="#">Olvidaste la contraseña</a></span
+      >
+    </OModal>
+    <OModal :show="showModalLogout" @close="showModalLogout = false">
+      <h3>¿Desea cerrar sesión?</h3>
+      <div class="flex justify-center">
+        <button
+        class="px-3 py-2 bg-primary text-sm text-black font-bold rounded mr-4"
+        type="submit"
+        @click="logout"
+      >
+        Si
+      </button>
+      <button
+        class="px-3 py-2 bg-primary text-sm text-black font-bold rounded"
+        type="submit"
+      >
+        No
+      </button>
+      </div>
     </OModal>
   </header>
 </template>
 <style>
 article {
-  background: linear-gradient(
-    to right,
-    hsl(98 100% 62%),
-    hsl(204 100% 59%)
-  );
+  background: linear-gradient(to right, hsl(98 100% 62%), hsl(204 100% 59%));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
