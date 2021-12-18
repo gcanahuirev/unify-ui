@@ -32,9 +32,6 @@ export const useAuthStore = defineStore("auth", {
           body: JSON.stringify({ name, email, password }),
         })
         .then((res) => res.json());
-      console.log(data);
-      useUser.set(data.user);
-      useToken.set(data.access_token);
     },
   },
 });

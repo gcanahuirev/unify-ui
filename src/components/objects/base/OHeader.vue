@@ -17,7 +17,7 @@ export default defineComponent({
     const showModalLogout = ref<boolean>(false);
     const showModalRegister = ref<boolean>(false);
     const router = useRouter();
-    const userData = useUser.get();
+    const userData = ref<any>(useUser.get());
 
     const store = useAuthStore();
 
@@ -29,6 +29,7 @@ export default defineComponent({
       });
       showModalLogin.value = false;
       router.push("/");
+      userData.value = useUser.get();
     };
 
     const register = async (e: Event) => {
@@ -38,13 +39,18 @@ export default defineComponent({
         email: target[1].value,
         password: target[2].value,
       });
-      showModalRegister.value = false;
-      router.push("/");
+      await store.login({
+        email: target[1].value,
+        password: target[2].value,
+      });
+      showModalRegister.value = false;      
     };
 
     const logout = () => {
       useUser.logout();
       router.push("/");
+      showModalLogout.value = false;
+      userData.value = useUser.get();
     };
 
     return {
