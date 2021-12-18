@@ -3,6 +3,7 @@ import { defineComponent, ref } from "vue";
 import OModal from "~/components/objects/OModal.vue";
 import { useAuthStore } from "~/store/auth.store";
 import { useUser } from "~/hooks/useToken";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   components: {
@@ -14,6 +15,8 @@ export default defineComponent({
     const menuToggle = () => (menuActive.value = !menuActive.value);
     const showModalLogin = ref<boolean>(false);
     const showModalLogout = ref<boolean>(false);
+    const showModalRegister = ref<boolean>(false);
+    const router = useRouter();
     const userData = useUser.get();
 
     const store = useAuthStore();
@@ -25,11 +28,24 @@ export default defineComponent({
         password: target[1].value,
       });
       showModalLogin.value = false;
+      router.push("/");
+    };
+
+    const register = async (e: Event) => {
+      const target = e.target as unknown as HTMLInputElement[];
+      await store.register({
+        name: target[0].value,
+        email: target[1].value,
+        password: target[2].value,
+      });
+      showModalRegister.value = false;
+      router.push("/");
     };
 
     const logout = () => {
-      useUser.logout()
-    }
+      useUser.logout();
+      router.push("/");
+    };
 
     return {
       menuRef,
@@ -37,9 +53,11 @@ export default defineComponent({
       menuToggle,
       showModalLogin,
       showModalLogout,
+      showModalRegister,
       login,
       userData,
-      logout
+      logout,
+      register,
     };
   },
 });
@@ -237,26 +255,45 @@ export default defineComponent({
           Login
         </button>
       </form>
-      <span class="text-sm italic font-medium"
-        ><a href="#">Olvidaste la contraseña</a></span
-      >
+      <div class="flex justify-center">
+        <span class="text-sm italic font-medium mr-6"
+          ><a href="#">Olvidaste la contraseña</a></span
+        >
+        <span class="text-sm italic font-medium" @click="showModalRegister = true"
+          ><a href="#">Registrar Usuario</a></span
+        >
+      </div>
+    </OModal>
+    <OModal :show="showModalRegister" @close="showModalRegister = false">
+      <h3>Registrar</h3>
+      <form @submit.prevent="register" class="flex flex-col pt-8">
+        <input type="text" placeholder="Name" class="rounded-md mb-4" />
+        <input type="email" placeholder="Email" class="rounded-md mb-4" />
+        <input type="password" placeholder="Password" class="rounded-md mb-4" />
+        <button
+          class="px-3 py-2 bg-primary text-sm text-black font-bold rounded"
+          type="submit"
+        >
+          Enviar
+        </button>
+      </form>
     </OModal>
     <OModal :show="showModalLogout" @close="showModalLogout = false">
       <h3>¿Desea cerrar sesión?</h3>
       <div class="flex justify-center">
         <button
-        class="px-3 py-2 bg-primary text-sm text-black font-bold rounded mr-4"
-        type="submit"
-        @click="logout"
-      >
-        Si
-      </button>
-      <button
-        class="px-3 py-2 bg-primary text-sm text-black font-bold rounded"
-        type="submit"
-      >
-        No
-      </button>
+          class="px-3 py-2 bg-primary text-sm text-black font-bold rounded mr-4"
+          type="submit"
+          @click="logout"
+        >
+          Si
+        </button>
+        <button
+          class="px-3 py-2 bg-primary text-sm text-black font-bold rounded"
+          type="submit"
+        >
+          No
+        </button>
       </div>
     </OModal>
   </header>
