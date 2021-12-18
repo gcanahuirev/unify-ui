@@ -74,6 +74,9 @@ export default defineComponent({
       router.push("/");
       showModalLogout.value = false;
       userData.value = useUser.get();
+      toast.info("Sesión finalizada",{
+          timeout: 3000,
+        })
     };
 
     return {
